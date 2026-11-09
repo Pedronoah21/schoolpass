@@ -37,6 +37,13 @@ Avisos de registros com mais de 30 minutos não são enviados, para não dispara
 Saída fora do horário mostra `PROCURE A SECRETARIA`; a secretaria libera pelo painel informando o motivo,
 e os pais recebem o aviso normalmente.
 
+## Interface
+
+O painel segue o design system em [`design-system/schoolpass/`](design-system/schoolpass/MASTER.md),
+gerado com o [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill): estilo
+minimalista suíço, tema escuro com verde de status (e tema claro), Fira Sans + Fira Code, alta densidade.
+Os ajustes específicos do painel estão em [`pages/painel.md`](design-system/schoolpass/pages/painel.md).
+
 ## Instalação
 
 Requer Node.js 20 ou mais novo, num computador ligado à mesma rede das catracas.
@@ -134,5 +141,6 @@ src/
   api/          rotas do painel
   sim/          simulador de catraca Lumen
 public/         painel web
+design-system/  design system do painel (gerado com ui-ux-pro-max-skill)
 test/           testes (protocolo, regras, integração com o simulador)
 ```

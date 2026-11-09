@@ -279,7 +279,9 @@ export function registrarRotas(app: FastifyInstance, db: DB, central: CentralCat
     const st = enviar('status');
     central.on('evento', ev);
     central.on('status', st);
-    const ping = setInterval(() => rep.raw.write(': ping\n\n'), 25_000);
+    // ping visível ao navegador: o painel usa para mostrar se a conexão ao vivo está atualizada
+    rep.raw.write(`event: ping\ndata: {}\n\n`);
+    const ping = setInterval(() => rep.raw.write(`event: ping\ndata: {}\n\n`), 20_000);
     req.raw.on('close', () => { clearInterval(ping); central.off('evento', ev); central.off('status', st); });
   });
 

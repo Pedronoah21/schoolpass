@@ -3,100 +3,161 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322C55E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E">
 <title>SchoolPass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fira+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
+
+<!-- Ícones (estilo Lucide, traço 2px) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-pulso" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+    <symbol id="i-pessoas" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-turmas" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></symbol>
+    <symbol id="i-catraca" viewBox="0 0 24 24"><rect x="4" y="3" width="6" height="18" rx="1"/><path d="M10 9h10M10 9l5-4M10 9l5 4"/><circle cx="7" cy="7" r="1"/></symbol>
+    <symbol id="i-relatorio" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></symbol>
+    <symbol id="i-entrar" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></symbol>
+    <symbol id="i-sair" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+    <symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-busca" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-baixar" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+    <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-lua" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+    <symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-lixo" viewBox="0 0 24 24"><path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></symbol>
+    <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  </defs>
+</svg>
+
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- LOGIN -->
 <div id="login" class="login" hidden>
-  <form id="form-login" class="cartao">
-    <h1>SchoolPass</h1>
-    <p class="sutil">Controle de acesso</p>
-    <label>Token de acesso<input type="password" name="token" required autofocus></label>
-    <button>Entrar</button>
-    <p id="erro-login" class="erro"></p>
+  <form id="form-login" class="cartao login-cartao" novalidate>
+    <div class="marca grande"><svg class="ic"><use href="#i-escudo"/></svg> SchoolPass</div>
+    <p class="suave">Controle de acesso escolar</p>
+    <div class="campo">
+      <label for="token">Token de acesso</label>
+      <input id="token" type="password" name="token" required autocomplete="current-password">
+      <p id="erro-login" class="msg-erro" role="alert"></p>
+    </div>
+    <button class="btn primario largo">Entrar</button>
   </form>
 </div>
 
-<div id="app" hidden>
-  <header>
-    <strong class="marca">SchoolPass</strong>
-    <nav id="abas">
-      <button data-aba="aovivo" class="ativa">Ao vivo</button>
-      <button data-aba="pessoas">Pessoas</button>
-      <button data-aba="turmas">Turmas</button>
-      <button data-aba="catracas">Catracas</button>
-      <button data-aba="relatorios">Relatórios</button>
-      <button data-aba="calendario">Calendário</button>
+<!-- APP -->
+<div id="app" class="app" hidden>
+  <aside class="lateral">
+    <div class="marca"><svg class="ic"><use href="#i-escudo"/></svg> <span>SchoolPass</span></div>
+    <nav id="abas" aria-label="Seções">
+      <a href="#aovivo" data-aba="aovivo"><svg class="ic"><use href="#i-pulso"/></svg><span>Ao vivo</span></a>
+      <a href="#pessoas" data-aba="pessoas"><svg class="ic"><use href="#i-pessoas"/></svg><span>Pessoas</span></a>
+      <a href="#turmas" data-aba="turmas"><svg class="ic"><use href="#i-turmas"/></svg><span>Turmas</span></a>
+      <a href="#catracas" data-aba="catracas"><svg class="ic"><use href="#i-catraca"/></svg><span>Catracas</span></a>
+      <a href="#relatorios" data-aba="relatorios"><svg class="ic"><use href="#i-relatorio"/></svg><span>Relatórios</span></a>
     </nav>
-    <button id="sair" class="link">Sair</button>
-  </header>
+    <button id="sair" class="btn fantasma lateral-sair"><svg class="ic"><use href="#i-sair"/></svg><span>Sair</span></button>
+  </aside>
 
-  <main>
-    <!-- AO VIVO -->
-    <section data-painel="aovivo">
-      <div id="status-catracas" class="grade-catracas"></div>
-      <div class="barra">
-        <h2>Passagens de hoje</h2>
-        <span id="contadores" class="sutil"></span>
+  <div class="principal">
+    <header class="topo">
+      <h1 id="titulo-pagina">Ao vivo</h1>
+      <div class="topo-dir">
+        <span id="sinal" class="sinal" role="status" aria-live="polite"><span class="ponto"></span><span class="sinal-txt">Conectando…</span></span>
+        <button id="tema" class="btn icone" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+          <svg class="ic so-escuro"><use href="#i-sol"/></svg><svg class="ic so-claro"><use href="#i-lua"/></svg>
+        </button>
+        <button id="sair-movel" class="btn icone" aria-label="Sair"><svg class="ic"><use href="#i-sair"/></svg></button>
       </div>
-      <table class="tabela"><thead><tr><th>Hora</th><th>Pessoa</th><th>Sentido</th><th>Resultado</th><th>Catraca</th><th>Motivo</th></tr></thead>
-        <tbody id="lista-eventos"></tbody></table>
-    </section>
+    </header>
 
-    <!-- PESSOAS -->
-    <section data-painel="pessoas" hidden>
-      <div class="barra">
-        <input id="busca-pessoa" type="search" placeholder="Buscar por nome ou matrícula">
-        <select id="filtro-tipo"><option value="">Todos</option><option value="aluno">Alunos</option><option value="funcionario">Funcionários</option><option value="visitante">Visitantes</option></select>
-        <button id="nova-pessoa">Nova pessoa</button>
-      </div>
-      <table class="tabela"><thead><tr><th>Nome</th><th>Tipo</th><th>Matrícula</th><th>Turma</th><th>Credenciais</th><th></th></tr></thead>
-        <tbody id="lista-pessoas"></tbody></table>
-    </section>
+    <main id="conteudo" tabindex="-1">
+      <!-- AO VIVO -->
+      <section data-painel="aovivo">
+        <div class="kpis" id="kpis" role="status" aria-atomic="true"></div>
+        <div class="secao-titulo"><h2>Catracas</h2></div>
+        <div id="status-catracas" class="grade-catracas"></div>
+        <div class="secao-titulo">
+          <h2>Passagens de hoje</h2>
+          <div class="filtros-rapidos" role="group" aria-label="Filtrar passagens">
+            <button class="chip ativo" data-filtro="">Todas</button>
+            <button class="chip" data-filtro="passou">Passou</button>
+            <button class="chip" data-filtro="negado">Negadas</button>
+          </div>
+        </div>
+        <div class="tabela-caixa">
+          <table class="tabela"><thead><tr><th>Hora</th><th>Pessoa</th><th>Sentido</th><th>Resultado</th><th>Catraca</th><th>Motivo</th></tr></thead>
+            <tbody id="lista-eventos"></tbody></table>
+        </div>
+      </section>
 
-    <!-- TURMAS -->
-    <section data-painel="turmas" hidden>
-      <div class="barra"><h2>Turmas</h2><button id="nova-turma">Nova turma</button></div>
-      <div id="lista-turmas" class="grade-turmas"></div>
-    </section>
+      <!-- PESSOAS -->
+      <section data-painel="pessoas" hidden>
+        <div class="barra">
+          <div class="busca"><svg class="ic"><use href="#i-busca"/></svg>
+            <input id="busca-pessoa" type="search" placeholder="Nome ou matrícula" aria-label="Buscar pessoa"></div>
+          <select id="filtro-tipo" aria-label="Tipo"><option value="">Todos os tipos</option><option value="aluno">Alunos</option><option value="funcionario">Funcionários</option><option value="visitante">Visitantes</option></select>
+          <button id="nova-pessoa" class="btn primario"><svg class="ic"><use href="#i-mais"/></svg>Nova pessoa</button>
+        </div>
+        <div class="tabela-caixa">
+          <table class="tabela"><thead><tr><th>Nome</th><th>Tipo</th><th>Matrícula</th><th>Turma</th><th>Credenciais</th><th><span class="sr">Ações</span></th></tr></thead>
+            <tbody id="lista-pessoas"></tbody></table>
+        </div>
+      </section>
 
-    <!-- CATRACAS -->
-    <section data-painel="catracas" hidden>
-      <div class="barra"><h2>Catracas</h2>
-        <a id="baixar-lista" class="botao secundario" href="#">Baixar lista offline (CSV)</a>
-        <button id="nova-catraca">Nova catraca</button></div>
-      <table class="tabela"><thead><tr><th>Nome</th><th>Endereço</th><th>Modo</th><th>Conexão</th><th></th></tr></thead>
-        <tbody id="lista-catracas"></tbody></table>
-    </section>
+      <!-- TURMAS + CALENDÁRIO -->
+      <section data-painel="turmas" hidden>
+        <div class="secao-titulo"><h2>Turmas e horários</h2><button id="nova-turma" class="btn primario"><svg class="ic"><use href="#i-mais"/></svg>Nova turma</button></div>
+        <div id="lista-turmas" class="grade-turmas"></div>
+        <div class="secao-titulo"><h2>Dias sem aula</h2></div>
+        <form id="form-feriado" class="barra">
+          <div class="campo inline"><label for="f-data">Data</label><input id="f-data" type="date" name="data" required></div>
+          <div class="campo inline cresce"><label for="f-desc">Descrição</label><input id="f-desc" name="descricao" placeholder="Feriado, recesso…"></div>
+          <button class="btn secundario"><svg class="ic"><use href="#i-mais"/></svg>Adicionar</button>
+        </form>
+        <ul id="lista-feriados" class="lista"></ul>
+      </section>
 
-    <!-- RELATÓRIOS -->
-    <section data-painel="relatorios" hidden>
-      <div class="barra">
-        <label>De <input type="date" id="rel-inicio"></label>
-        <label>Até <input type="date" id="rel-fim"></label>
-        <select id="rel-turma"><option value="">Todas as turmas</option></select>
-        <button id="rel-gerar">Gerar</button>
-        <a id="rel-csv" class="botao secundario" href="#">Exportar CSV</a>
-      </div>
-      <p class="sutil" id="rel-legenda"></p>
-      <table class="tabela"><thead id="rel-cabecalho"></thead><tbody id="rel-corpo"></tbody></table>
-    </section>
+      <!-- CATRACAS -->
+      <section data-painel="catracas" hidden>
+        <div class="secao-titulo"><h2>Equipamentos</h2>
+          <div class="acoes-linha">
+            <a id="baixar-lista" class="btn secundario" href="#"><svg class="ic"><use href="#i-baixar"/></svg>Lista offline (CSV)</a>
+            <button id="nova-catraca" class="btn primario"><svg class="ic"><use href="#i-mais"/></svg>Nova catraca</button>
+          </div></div>
+        <div class="tabela-caixa">
+          <table class="tabela"><thead><tr><th>Nome</th><th>Endereço</th><th>Modo</th><th>Conexão</th><th><span class="sr">Ações</span></th></tr></thead>
+            <tbody id="lista-catracas"></tbody></table>
+        </div>
+      </section>
 
-    <!-- CALENDÁRIO -->
-    <section data-painel="calendario" hidden>
-      <div class="barra"><h2>Dias sem aula</h2></div>
-      <form id="form-feriado" class="barra">
-        <input type="date" name="data" required>
-        <input name="descricao" placeholder="Descrição (ex.: Feriado)">
-        <button>Adicionar</button>
-      </form>
-      <ul id="lista-feriados" class="lista"></ul>
-    </section>
-  </main>
+      <!-- RELATÓRIOS -->
+      <section data-painel="relatorios" hidden>
+        <form class="barra" id="form-rel">
+          <div class="campo inline"><label for="rel-inicio">De</label><input type="date" id="rel-inicio" required></div>
+          <div class="campo inline"><label for="rel-fim">Até</label><input type="date" id="rel-fim" required></div>
+          <div class="campo inline"><label for="rel-turma">Turma</label><select id="rel-turma"><option value="">Todas</option></select></div>
+          <button class="btn primario">Gerar</button>
+          <a id="rel-csv" class="btn secundario" href="#"><svg class="ic"><use href="#i-baixar"/></svg>CSV</a>
+        </form>
+        <div class="kpis" id="rel-resumo"></div>
+        <p class="suave pequeno" id="rel-legenda"></p>
+        <div class="tabela-caixa">
+          <table class="tabela"><thead id="rel-cabecalho"></thead><tbody id="rel-corpo"></tbody></table>
+        </div>
+      </section>
+    </main>
+  </div>
 </div>
 
-<dialog id="dialogo"><form method="dialog" id="dialogo-form"></form></dialog>
-<div id="aviso" class="aviso" hidden></div>
+<dialog id="dialogo" aria-labelledby="dialogo-titulo"><form method="dialog" id="dialogo-form"></form></dialog>
+<div id="aviso" class="aviso" role="status" aria-live="polite" hidden></div>
 <script src="app.js"></script>
 </body>
 </html>

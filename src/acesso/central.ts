@@ -166,20 +166,23 @@ export class CentralCatracas extends EventEmitter {
     if (p) this.registrarDesistencia(catracaId, p, 'tempo esgotado sem giro');
   }
 
-  private confirmarPassagem(catracaId: number, p: Omit<Pendente, 'timer'>, sentido: Sentido): void {
-    const id = this.registrar({
-      catracaId, pessoaId: p.decisao.pessoaId, tipo: p.tipo, valor: p.credencial, sentido,
-      resultado: p.origem === 'manual' ? 'manual' : 'passou', motivo: p.decisao.motivo,
-      origem: p.origem, quando: this.relogio().completo,
-    });
-    if (p.decisao.pessoaId) this.notificador.enfileirar(id);
+  /**
+   * Cada tentativa é uma única linha em `eventos`: nasce como 'liberado' e é concluída aqui
+   * como 'passou'/'manual' (com o horário real do giro) ou 'desistiu'.
+   */
+  private confirmarPassagem(_catracaId: number, p: Omit<Pendente, 'timer'>, sentido: Sentido): void {
+    this.concluir(p.eventoId, p.origem === 'manual' ? 'manual' : 'passou', sentido, p.decisao.motivo);
+    if (p.decisao.pessoaId) this.notificador.enfileirar(p.eventoId);
   }
 
-  private registrarDesistencia(catracaId: number, p: Omit<Pendente, 'timer'>, motivo: string): void {
-    this.registrar({
-      catracaId, pessoaId: p.decisao.pessoaId, tipo: p.tipo, valor: p.credencial, sentido: p.decisao.sentido,
-      resultado: 'desistiu', motivo, origem: p.origem, quando: this.relogio().completo,
-    });
+  private registrarDesistencia(_catracaId: number, p: Omit<Pendente, 'timer'>, motivo: string): void {
+    this.concluir(p.eventoId, 'desistiu', p.decisao.sentido, motivo);
+  }
+
+  private concluir(eventoId: number, resultado: string, sentido: Sentido, motivo: string): void {
+    this.db.prepare('UPDATE eventos SET resultado = ?, sentido = ?, motivo = ?, ocorrido_em = ? WHERE id = ?')
+      .run(resultado, sentido, motivo, this.relogio().completo, eventoId);
+    this.emitirEvento(eventoId);
   }
 
   /** Passagem que a catraca autorizou sozinha (modo offline ou memória de contingência). */

@@ -52,6 +52,7 @@ test('modo online: libera, confirma o giro e avisa a responsável', async () => 
   assert.equal(d.texto, 'BEM-VINDO ANA');
   await esperar(() => eventos().some((e) => e.resultado === 'passou'));
   await esperar(() => avisos.length === 1);
+  assert.equal(eventos().length, 1, 'a tentativa deve virar uma única linha (liberado → passou)');
   assert.equal(avisos[0].nomeAluno, 'Ana Souza');
   assert.equal(avisos[0].sentido, 'entrada');
 });
