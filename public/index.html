@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SchoolPass</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div id="login" class="login" hidden>
+  <form id="form-login" class="cartao">
+    <h1>SchoolPass</h1>
+    <p class="sutil">Controle de acesso</p>
+    <label>Token de acesso<input type="password" name="token" required autofocus></label>
+    <button>Entrar</button>
+    <p id="erro-login" class="erro"></p>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <header>
+    <strong class="marca">SchoolPass</strong>
+    <nav id="abas">
+      <button data-aba="aovivo" class="ativa">Ao vivo</button>
+      <button data-aba="pessoas">Pessoas</button>
+      <button data-aba="turmas">Turmas</button>
+      <button data-aba="catracas">Catracas</button>
+      <button data-aba="relatorios">Relatórios</button>
+      <button data-aba="calendario">Calendário</button>
+    </nav>
+    <button id="sair" class="link">Sair</button>
+  </header>
+
+  <main>
+    <!-- AO VIVO -->
+    <section data-painel="aovivo">
+      <div id="status-catracas" class="grade-catracas"></div>
+      <div class="barra">
+        <h2>Passagens de hoje</h2>
+        <span id="contadores" class="sutil"></span>
+      </div>
+      <table class="tabela"><thead><tr><th>Hora</th><th>Pessoa</th><th>Sentido</th><th>Resultado</th><th>Catraca</th><th>Motivo</th></tr></thead>
+        <tbody id="lista-eventos"></tbody></table>
+    </section>
+
+    <!-- PESSOAS -->
+    <section data-painel="pessoas" hidden>
+      <div class="barra">
+        <input id="busca-pessoa" type="search" placeholder="Buscar por nome ou matrícula">
+        <select id="filtro-tipo"><option value="">Todos</option><option value="aluno">Alunos</option><option value="funcionario">Funcionários</option><option value="visitante">Visitantes</option></select>
+        <button id="nova-pessoa">Nova pessoa</button>
+      </div>
+      <table class="tabela"><thead><tr><th>Nome</th><th>Tipo</th><th>Matrícula</th><th>Turma</th><th>Credenciais</th><th></th></tr></thead>
+        <tbody id="lista-pessoas"></tbody></table>
+    </section>
+
+    <!-- TURMAS -->
+    <section data-painel="turmas" hidden>
+      <div class="barra"><h2>Turmas</h2><button id="nova-turma">Nova turma</button></div>
+      <div id="lista-turmas" class="grade-turmas"></div>
+    </section>
+
+    <!-- CATRACAS -->
+    <section data-painel="catracas" hidden>
+      <div class="barra"><h2>Catracas</h2>
+        <a id="baixar-lista" class="botao secundario" href="#">Baixar lista offline (CSV)</a>
+        <button id="nova-catraca">Nova catraca</button></div>
+      <table class="tabela"><thead><tr><th>Nome</th><th>Endereço</th><th>Modo</th><th>Conexão</th><th></th></tr></thead>
+        <tbody id="lista-catracas"></tbody></table>
+    </section>
+
+    <!-- RELATÓRIOS -->
+    <section data-painel="relatorios" hidden>
+      <div class="barra">
+        <label>De <input type="date" id="rel-inicio"></label>
+        <label>Até <input type="date" id="rel-fim"></label>
+        <select id="rel-turma"><option value="">Todas as turmas</option></select>
+        <button id="rel-gerar">Gerar</button>
+        <a id="rel-csv" class="botao secundario" href="#">Exportar CSV</a>
+      </div>
+      <p class="sutil" id="rel-legenda"></p>
+      <table class="tabela"><thead id="rel-cabecalho"></thead><tbody id="rel-corpo"></tbody></table>
+    </section>
+
+    <!-- CALENDÁRIO -->
+    <section data-painel="calendario" hidden>
+      <div class="barra"><h2>Dias sem aula</h2></div>
+      <form id="form-feriado" class="barra">
+        <input type="date" name="data" required>
+        <input name="descricao" placeholder="Descrição (ex.: Feriado)">
+        <button>Adicionar</button>
+      </form>
+      <ul id="lista-feriados" class="lista"></ul>
+    </section>
+  </main>
+</div>
+
+<dialog id="dialogo"><form method="dialog" id="dialogo-form"></form></dialog>
+<div id="aviso" class="aviso" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>
